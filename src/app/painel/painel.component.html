@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-10 col-lg-9 mx-auto">
+      <div class="card my-5 p-1 p-md-3">
+        <div class="p-2 pt-5 p-md-5 mb-4 rounded-3">
+          <div class="container">
+
+            <h1 class="display-6 fw-bold">
+              Olá, <span class="text-primary">{{emailUsuario}} !!!</span>
+            </h1>
+
+            <p class="fs-4 mt-4">
+              Seja bem-vindo ao sistema de Requisições da <span class="text-primary">Academia do programador</span>
+            </p>
+
+            <div class="d-grid d-lg-flex text-center gap-2 mt-5">
+              <button class="btn btn-primary btn-lg mt-md-auto" type="button" routerLink="/departamentos">Gerenciar Departamentos</button>
+              <button class="btn btn-outline-primary btn-lg mt-lg-auto" type="button" (click)="sair()">Sair</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

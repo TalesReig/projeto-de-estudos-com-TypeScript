@@ -1,0 +1,111 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-10 col-lg-9 mx-auto mt-5">
+      <div class="text-center text-md-start">
+        <h1 class="fw-bold">Produtos</h1>
+      </div>
+
+      <div class="d-grid gap-2 d-md-block my-4">
+        <button
+          (click)="gravar(modal)"
+          type="button" class="btn btn-primary me-md-1 col-md-2">
+          <i class="pi pi-user-plus me-2">Novo</i>
+        </button>
+        <a
+          role="button"
+          class="btn btn-outline-primary col-md-2"
+          routerLink="/painel">
+          <i class="pi pi-sign-out me-2"></i> Voltar
+        </a>
+      </div>
+      <div>
+        <table class="table table-light table-striped table-hover">
+          <thead class="thead-dark text-center">
+            <tr>
+              <th>N° de Série</th>
+              <th>Nome do Equipamento</th>
+              <th>Preço de Aquisição</th>
+              <th>Data de Fabricação</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            <tr *ngFor="let produto of (produtos$ | async)">
+              <td>{{produto.numeroDeSerie}}</td>
+              <td>{{produto.nome}}</td>
+              <td>{{produto.preco}}</td>
+              <td>{{produto.dataDeFabricacao}}</td>
+              <td class="d-grid d-md-block">
+                <button
+                  (click)="gravar(modal, produto)"
+                  type="button"
+                  class="btn btn-primary me-0 me-md-1 mb-1 mb-md-auto">
+                  <i class="pi pi-user-edit"></i>
+                </button>
+
+                <button
+                  (click)="excluir(produto)"
+                  type="button"
+                  class="btn btn-outline-danger">
+                  <i class="pi pi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Cadatro de Departamento</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('fechar')"></button>
+  </div>
+  <form>
+    <div class="modal-body">
+
+      <!-- N° de Série -->
+      <div class="form-group mb-3">
+        <label for="numeroDeSerie" class="form-label">N° de Série</label>
+        <input formControlName = "numeroDeSerie"
+        class="form-control"
+        type="text"
+        placeholder="Digite o N° de Série">
+      </div>
+
+      <!-- Nome do Equipamento -->
+      <div class="form-group mb-3">
+        <label for="nome" class="form-label">Nome do Equipamento</label>
+        <input formControlName = "nome"
+        class="form-control"
+        type="text"
+        placeholder="Digite o Nome do Equipamento">
+      </div>
+
+      <!-- Preço de Aquisição -->
+      <div class="form-group mb-3">
+        <label for="preco" class="form-label">Preço de Aquisição</label>
+        <input formControlName = "preco"
+        class="form-control money2"
+        type=""
+        placeholder="R$ 0.00">
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="dataDeFabricacao" class="form-label">Data De Fabricação</label>
+        <input formControlName = "dataDeFabricacao"
+        class="form-control"
+        type="date"
+        placeholder="dd/mm/aaaa">
+      </div>
+
+  </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-primary col-md-3" (click)="modal.dismiss('fechar')">Cancelar</button>
+      <button type="submit" class="btn btn-primary col-md-3">Enviar</button>
+    </div>
+  </form>
+</ng-template>
+
