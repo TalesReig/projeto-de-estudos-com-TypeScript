@@ -17,13 +17,19 @@ import { PainelComponent } from './painel/painel.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { DepartamentoModule } from './departamentos/departamento.module';
 import { ProdutoModule } from './produtos/produto.module';
+import { SharedModule } from './shared/shared.module';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ToastrModule } from 'ngx-toastr';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     PainelComponent,
-    NavbarComponent
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,7 +41,12 @@ import { ProdutoModule } from './produtos/produto.module';
     AngularFirestoreModule,
 
     DepartamentoModule,
-    ProdutoModule
+    ProdutoModule,
+    SharedModule,
+
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(),
+    NgxMaskModule.forRoot({dropSpecialCharacters: false})
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent]

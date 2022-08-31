@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { Produto } from './models/produto.model';
 import { ProdutoService } from './service/produto.service';
+import { ToastContainerDirective, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-produto',
@@ -16,7 +17,8 @@ export class ProdutoComponent implements OnInit {
   constructor(
     private produtoService: ProdutoService,
     private modalService: NgbModal,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastrService: ToastrService
    ) { }
 
   ngOnInit(): void {
@@ -60,14 +62,18 @@ export class ProdutoComponent implements OnInit {
     try {
       await this.modalService.open(modal).result;
 
-      if(!produto)
-        await this.produtoService.inserir(this.form.value)
-      else
+      if(!produto){
+        await this.produtoService.inserir(this.form.value);
+        this.toastrService.success("Produto inserido com sucesso","Cadastro de Produtos");
+      }
+      else{
         await this.produtoService.editar(this.form.value)
+        this.toastrService.success("Produto editado com sucesso","Edição de Produtos");
+      }
 
       console.log(`O produto foi salvo com sucesso`)
     } catch (error) {
-      console.log(error)
+      this.toastrService.error("Cadastro de Produtos","Produto não inserido");
     }
   }
 

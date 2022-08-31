@@ -33,8 +33,8 @@
             <tr *ngFor="let produto of (produtos$ | async)">
               <td>{{produto.numeroDeSerie}}</td>
               <td>{{produto.nome}}</td>
-              <td>{{produto.preco}}</td>
-              <td>{{produto.dataDeFabricacao}}</td>
+              <td>{{produto.preco | currency:'BRL':'R$'}}</td>
+              <td>{{produto.dataDeFabricacao| date:'dd/MM/yyyy'}}</td>
               <td class="d-grid d-md-block">
                 <button
                   (click)="gravar(modal, produto)"
@@ -63,13 +63,13 @@
     <h4 class="modal-title" id="modal-basic-title">Cadatro de Departamento</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('fechar')"></button>
   </div>
-  <form>
+  <form [formGroup]="form" (ngSubmit)="modal.close('gravar')">
     <div class="modal-body">
 
       <!-- N° de Série -->
       <div class="form-group mb-3">
         <label for="numeroDeSerie" class="form-label">N° de Série</label>
-        <input formControlName = "numeroDeSerie"
+        <input formControlName="numeroDeSerie"
         class="form-control"
         type="text"
         placeholder="Digite o N° de Série">
@@ -88,6 +88,10 @@
       <div class="form-group mb-3">
         <label for="preco" class="form-label">Preço de Aquisição</label>
         <input formControlName = "preco"
+        mask="separator.2"
+          prefix="R$ "
+          thousandSeparator=","
+          decimalMarker="."
         class="form-control money2"
         type=""
         placeholder="R$ 0.00">
