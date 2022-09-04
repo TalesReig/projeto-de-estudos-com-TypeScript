@@ -23,6 +23,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ToastrModule } from 'ngx-toastr';
 import { NgxMaskModule } from 'ngx-mask';
+import { FuncionarioModule } from './funcionarios/funcionario.module';
 
 @NgModule({
   declarations: [
@@ -40,13 +41,11 @@ import { NgxMaskModule } from 'ngx-mask';
     AngularFireAuthModule,
     AngularFirestoreModule,
 
-    DepartamentoModule,
-    ProdutoModule,
-    SharedModule,
-
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(),
-    NgxMaskModule.forRoot({dropSpecialCharacters: false})
+    NgxMaskModule.forRoot({dropSpecialCharacters: false}),
+
+    SharedModule
   ],
   providers: [AuthenticationService],
   bootstrap: [AppComponent]

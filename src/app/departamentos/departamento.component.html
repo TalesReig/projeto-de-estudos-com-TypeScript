@@ -62,27 +62,41 @@
   <form [formGroup]="form" (ngSubmit)="modal.close('gravar')">
     <div class="modal-body">
 
-      <div class="form-group mb-3">
+      <div class="form-group mb-3 position-relative">
           <label for="nome" class="form-label">Nome do departamento</label>
           <input formControlName = "nome"
           class="form-control"
           type="text"
-          placeholder="Digite o nome do departamento">
+          placeholder="Digite o nome do departamento"
+          [ngClass]="(nome?.touched && nome?.invalid)? 'is-invalid' : ''">
+          <div
+          class="invalid-tooltip"
+          *ngIf="nome?.touched && nome?.invalid">
+            <span *ngIf="nome?.errors?.['required']">O nome é obrigatório</span>
+            <span *ngIf="nome?.errors?.['minlength']">O nome precisa ter no mínimo 3 letras</span>
+          </div>
       </div>
 
-      <div class="form-group mb-3">
+      <div class="form-group mb-3 position-relative">
         <label for="telefone" class="form-label">Telefone do departamento</label>
         <input formControlName = "telefone"
         mask="(00) 0000-0000||(00) 0 0000-0000"
         class="form-control"
         type="text"
-        placeholder="Digite o n° de telefone do departamento">
+        placeholder="Digite o n° de telefone do departamento"
+        [ngClass]="(telefone?.touched && telefone?.invalid)? 'is-invalid' : ''">
+        <div
+        class="invalid-tooltip"
+        *ngIf="telefone?.touched && nome?.invalid">
+          <span *ngIf="telefone?.errors?.['required']">O telefone é obrigatório</span>
+          <span *ngIf="telefone?.errors?.['minlength']">O telefone deve estar no formato (00) 0000-0000 ou (00) 0 0000-0000</span>
+        </div>
     </div>
 
   </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-primary col-md-3" (click)="modal.dismiss('fechar')">Cancelar</button>
-      <button type="submit" class="btn btn-primary col-md-3">Enviar</button>
+      <button type="submit" class="btn btn-primary col-md-3" [disabled]="this.form.invalid">Enviar</button>
     </div>
   </form>
 </ng-template>

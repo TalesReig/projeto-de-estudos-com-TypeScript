@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { Departamento } from './models/departamento.model';
@@ -28,8 +28,8 @@ export class DepartamentoComponent implements OnInit {
 
     this.form = this.fb.group({
       id: new FormControl(""),
-      nome: new FormControl(""),
-      telefone: new FormControl("")
+      nome: new FormControl("",[Validators.required, Validators.minLength(3)]),
+      telefone: new FormControl("",[Validators.required, Validators.minLength(10)])
     })
   }
 
@@ -64,7 +64,7 @@ export class DepartamentoComponent implements OnInit {
       }
 
     } catch (error) {
-      this.toastrService.error('Departamenta não inserido com sucesso');
+      this.toastrService.error('Departamenta não inserido');
     }
   }
 
