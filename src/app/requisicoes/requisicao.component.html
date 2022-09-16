@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md10 col-lg-9 mx-auto my-4">
+      <div class="btn-group">
+        <button
+          routerLinkActive="active"
+          routerLink="/requisicoes/funcionario"
+          class="btn btn-outline-primary"
+          arial-current="page">
+          <i class="pi pi-ticket me-1">Minhas Requisições</i>
+        </button>
+        <button
+          routerLinkActive="active"
+          routerLink="/requisicoes/departamento"
+          class="btn btn-outline-primary">
+          <i class="pi pi-inbox me-1">Requisições para o meu departamento</i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

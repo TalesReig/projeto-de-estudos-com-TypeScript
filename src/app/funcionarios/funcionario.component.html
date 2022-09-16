@@ -66,7 +66,8 @@
   <form [formGroup]="form" (ngSubmit)="modal.close('gravar')">
     <div class="modal-body">
 
-      <div class="form-group mb-3 position-relative">
+      <div formGroupName="funcionario">
+        <div class="form-group mb-3 position-relative">
           <label for="nome" class="form-label">Nome</label>
           <input formControlName = "nome"
           class="form-control"
@@ -79,58 +80,74 @@
               <span *ngIf="nome?.errors?.['required']">O nome é obrigatório</span>
               <span *ngIf="nome?.errors?.['minlength']">O nome precisa ter no mínimo 3 letras</span>
             </div>
+        </div>
+
+        <div class="form-group mb-3 position-relative">
+          <label for="email" class="form-label">Email</label>
+          <input formControlName = "email"
+          class="form-control"
+          type="text"
+          placeholder="Digite o email do funcionário"
+          [ngClass]="(email?.touched && email?.invalid)? 'is-invalid' : ''">
+            <div
+            class="invalid-tooltip"
+            *ngIf="email?.touched && email?.invalid">
+              <span *ngIf="email?.errors?.['required']">O email é obrigatório</span>
+              <span *ngIf="email?.errors?.['email']">O email precisa ser válido</span>
+            </div>
+        </div>
+
+        <div class="form-group mb-3 position-relative">
+          <label for="funcao" class="form-label">Função</label>
+          <input formControlName = "funcao"
+          class="form-control"
+          type="text"
+          placeholder="Digite a função do funcionário"
+          [ngClass]="(funcao?.touched && funcao?.invalid)? 'is-invalid' : ''">
+            <div
+            class="invalid-tooltip"
+            *ngIf="funcao?.touched && funcao?.invalid">
+              <span *ngIf="funcao?.errors?.['required']">A função é obrigatória</span>
+              <span *ngIf="funcao?.errors?.['minlength']">A função precisa ter no mínimo 3 letras</span>
+            </div>
+        </div>
+
+        <div class="form-group mb-3 position-relative">
+          <label for="departamentoId" class="form-label">Departamento</label>
+          <ng-select formControlName="departamentoId"
+          [clearable]="false"
+          [searchable]="false"
+          [ngClass]="(email?.touched && email?.invalid)? 'is-invalid' : ''">
+            <ng-option
+              *ngFor="let departamento of (departamentos$ | async)"
+              [value]="departamento.id">
+              {{ departamento.nome }}
+            </ng-option>
+          </ng-select>
+          <div
+            class="invalid-tooltip"
+            *ngIf="departamentoId?.touched && departamentoId?.invalid">
+              <span *ngIf="departamentoId?.errors?.['required']">O departamento é obrigatório</span>
+            </div>
+          </div>
       </div>
 
-      <div class="form-group mb-3 position-relative">
-        <label for="email" class="form-label">Email</label>
-        <input formControlName = "email"
+      <div class="form-group mb-3 position-relative" *ngIf="!this.id?.value">
+        <label for="senha" class="form-label">Senha</label>
+        <input formControlName = "senha"
         class="form-control"
-        type="text"
-        placeholder="Digite o email do funcionário"
-        [ngClass]="(email?.touched && email?.invalid)? 'is-invalid' : ''">
+        type="password"
+        placeholder="Digite a senha do funcionário"
+        [ngClass]="(senha?.touched && senha?.invalid)? 'is-invalid' : ''">
           <div
           class="invalid-tooltip"
-          *ngIf="email?.touched && email?.invalid">
-            <span *ngIf="email?.errors?.['required']">O email é obrigatório</span>
-            <span *ngIf="email?.errors?.['email']">O email precisa ser válido</span>
+          *ngIf="senha?.touched && senha?.invalid">
+            <span *ngIf="senha?.errors?.['required']">O senha é obrigatório</span>
+            <span *ngIf="senha?.errors?.['minlength']">A senha precisa ter no mínimo 6 letras</span>
           </div>
+      </div>
+
     </div>
-
-    <div class="form-group mb-3 position-relative">
-      <label for="funcao" class="form-label">Função</label>
-      <input formControlName = "funcao"
-      class="form-control"
-      type="text"
-      placeholder="Digite a função do funcionário"
-      [ngClass]="(funcao?.touched && funcao?.invalid)? 'is-invalid' : ''">
-        <div
-        class="invalid-tooltip"
-        *ngIf="funcao?.touched && funcao?.invalid">
-          <span *ngIf="funcao?.errors?.['required']">A função é obrigatória</span>
-          <span *ngIf="funcao?.errors?.['minlength']">A função precisa ter no mínimo 3 letras</span>
-        </div>
-  </div>
-
-  <div class="form-group mb-3 position-relative">
-    <label for="departamentoId" class="form-label">Departamento</label>
-    <ng-select formControlName="departamentoId"
-    [clearable]="false"
-    [searchable]="false"
-    [ngClass]="(email?.touched && email?.invalid)? 'is-invalid' : ''">
-      <ng-option
-        *ngFor="let departamento of (departamentos$ | async)"
-        [value]="departamento.id">
-        {{ departamento.nome }}
-      </ng-option>
-    </ng-select>
-    <div
-    class="invalid-tooltip"
-    *ngIf="departamentoId?.touched && departamentoId?.invalid">
-      <span *ngIf="departamentoId?.errors?.['required']">O departamento é obrigatório</span>
-    </div>
-</div>
-
-  </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-primary col-md-3" (click)="modal.dismiss('fechar')">Cancelar</button>
       <button type="submit" class="btn btn-primary col-md-3" [disabled]="this.form.invalid">Enviar</button>

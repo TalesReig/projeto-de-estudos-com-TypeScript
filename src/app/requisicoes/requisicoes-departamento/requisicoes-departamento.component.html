@@ -1,0 +1,108 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-10 col-lg-9 mx-auto mt-5">
+      <div class="text-center text-md-start">
+        <h1 class="fw-bold text-primary">Requisições para meu departamento</h1>
+      </div>
+      <div class="d-grid gap-2 d-md-block mt-4">
+        <button  type="button" class="btn btn-primary me-md-1 col-md-2">
+          <i class="pi pi-user-plus me-2"></i>Novo
+        </button>
+        <a role="button" class="btn btn-outline-primary col-md-2" routerLink="/painel">
+          <i class="pi pi-sign-out me-2"></i>Voltar
+        </a>
+      </div>
+
+      <div class="mt-4">
+        <table class="table table-light table-striped table-hover">
+          <thead class="thead-dark text-center">
+            <tr>
+              <th>Data de Abertura</th>
+              <th>Departamento</th>
+              <th>Descrição</th>
+              <th>Produto</th>
+              <th>Status</th>
+              <th>Ultima Atualização</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            <tr *ngFor="let requisicao of ((requisicoes$ | async )| requisicoesDepartamento: funcionarioLogado.departamentoId)">
+              <td>{{ requisicao.dataDeAbertura.toDate() | date: 'dd/MM/yyyy' }}</td>
+              <td>{{ requisicao.departamento?.nome}}</td>
+              <td>{{ requisicao.descricao }}</td>
+              <td>{{ requisicao.produto ? requisicao.produto?.nome : "Não Selecionado" }}</td>
+              <td>{{ requisicao.status }}</td>
+              <td>{{ requisicao.ultimaAtualizacao.toDate() | date: 'dd/MM/yyyy' }}</td>
+              <td class="d-grid d-md-block">
+                <button (click)="gravar(modal, requisicao)" type="button"
+                  class="btn btn-primary me-0 me-md-1 mb-1 mb-md-auto">
+                  <i class="pi pi-check-square"></i>
+                </button>
+
+                <button
+                  [routerLink]="['/requisicoes', requisicao.id]"
+                  type="button"
+                  class="btn btn-outline-primary">
+                  <i class="pi pi-tags"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modal let-modal>
+  <div class="modal-header"><h4>Movimentação de Requisição</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('fechar')"></button>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="modal.close('gravar')">
+    <div class="modal-body">
+
+      <div class="form-group mb-3">
+        <label for="solicitante" class="form-label">Solicitante</label>
+        <p class="text-primary fw-semibold">{{ funcionarioLogado.nome }}</p>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="equipamentoId" class="form-label">Equipamento</label>
+        <p class="fw-semibold">{{ requisicaoSelecionada.produto ? requisicaoSelecionada.produto.nome : "Não selecionado" }}</p>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="solicitacao" class="form-label">Solicitação</label>
+        <p class="fw-semibold">{{ requisicaoSelecionada.descricao }}</p>
+      </div>
+
+
+      <div class="form-group mb-3 position-relative">
+        <label for="status" class="form-label">Status</label>
+        <ng-select
+          formControlName="status"
+          placeholder="Status da requisição"
+          [clearable]="false"
+          [searchable]="false"
+          [items]="listaStatus"
+          >
+        </ng-select>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="descricao" class="form-label">Descrição da movimentação</label>
+        <textarea
+          formControlName="descricao"
+          type="text"
+          class="form-control"
+          placeholder="Digite a descrição da movimentação"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-primary col-md-3" (click)="modal.dismiss('fechar')">Cancelar</button>
+      <button type="submit" class="btn btn-primary col-md-3" [disabled]="this.form.invalid">Gravar</button>
+    </div>
+  </form>
+
+</ng-template>

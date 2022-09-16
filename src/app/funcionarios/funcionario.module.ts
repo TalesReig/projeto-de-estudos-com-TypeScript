@@ -17,7 +17,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
     FuncionarioRoutingModule,
     ReactiveFormsModule,
     NgSelectModule,
-    FuncionarioRoutingModule,
     NgxMaskModule.forChild()
   ]
 })
